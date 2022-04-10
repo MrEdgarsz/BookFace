@@ -19,7 +19,8 @@ login_manager.login_message_category = "info"
 
 @login_manager.user_loader
 def load_user(user_id):
-    return None;
+    return None
+
 
 @app.route("/")
 def home_page():
