@@ -7,7 +7,7 @@ from bookface.auth import auth
 
 app = Flask(__name__, template_folder="pages")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///condition_monitor.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///bookface.db"
 app.config["SECRET_KEY"] = "97fdf98cb2f69976dc8c7c17"
 app.register_blueprint(auth)
 bcrypt = Bcrypt(app)
