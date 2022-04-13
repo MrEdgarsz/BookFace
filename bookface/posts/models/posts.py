@@ -1,5 +1,6 @@
 from bookface import db
 from datetime import datetime
+from sqlalchemy import ForeignKey
 
 class Post(db.Model):
     __tablename__ = "posts"
@@ -10,6 +11,3 @@ class Post(db.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    def addPost(self, post):
-        self._engine.session.add(post)
