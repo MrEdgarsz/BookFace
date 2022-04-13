@@ -13,8 +13,5 @@ class Roles(db.Model):
     def __init__(self, *args, **kwargs):
         super(Roles, self).__init__(*args, **kwargs)
 
-    def addRole(self, role):
-        self._engine.session.add(role)
-
 
 # define relationships with user model: https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#a-minimal-application
