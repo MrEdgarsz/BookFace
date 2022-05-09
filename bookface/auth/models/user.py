@@ -1,6 +1,7 @@
 from flask_login import UserMixin
+from sqlalchemy.orm import backref
 
-from bookface import db
+from bookface import db, bcrypt
 
 
 class User(db.Model, UserMixin):
@@ -9,7 +10,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     password_hash = db.Column(db.String(60), nullable=False)
-    role = db.relationship('roles', uselist=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False)
+    role = db.relationship('Role', uselist=False, backref=backref('users'))
 
     @property
     def password(self):
