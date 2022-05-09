@@ -1,3 +1,4 @@
+from bookface.auth.auth import auth as auth_module
 from flask import Flask, render_template, Blueprint
 from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap
@@ -11,7 +12,6 @@ bootstrap = Bootstrap(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-from bookface.auth.auth import auth as auth_module
 app.register_blueprint(auth_module)
 
 

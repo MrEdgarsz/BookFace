@@ -1,6 +1,6 @@
 from os import name
 from bookface.roles.models import *
-from bookface.roles.models.roles import Roles
+from bookface.roles.models.role import Roles
 from bookface.roles.services.roles_services import RolesService
 
 
