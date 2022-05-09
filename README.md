@@ -58,3 +58,4 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
 9. Blocked user page
    - information about being blocked
    - some form to contact page administrators?
+   - 404 page
