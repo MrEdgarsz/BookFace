@@ -4,8 +4,8 @@ from sqlalchemy import Table, Column, Integer, Boolean, String, ForeignKey, Meta
 
 class Role(db.Model):
     __tablename__ = "roles"
-    role_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(10), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
     can_add_post = db.Column(db.Boolean, nullable=False)
     can_block_user = db.Column(db.Boolean, nullable=False)
     can_remove_post = db.Column(db.Boolean, nullable=False)
