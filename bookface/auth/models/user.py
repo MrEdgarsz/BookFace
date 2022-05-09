@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 
-from bookface import bcrypt, db, login_manager
+from bookface import db
 
 
 class User(db.Model, UserMixin):
@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     password_hash = db.Column(db.String(60), nullable=False)
+    role = db.relationship('roles', uselist=False)
 
     @property
     def password(self):
@@ -20,5 +21,3 @@ class User(db.Model, UserMixin):
 
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
-
-
