@@ -6,7 +6,7 @@
         <div class="col-4">
             <div class="container black">
                  <form action="" method="POST">
-                    {{ wtf.form_errors(form, hiddens="only") }}
+                    {{ wtf.form_errors(form, hidden="only") }}
                         {% for field in form %}
                         {% if field.name == "csrf_token" %}
                           {{ field }}

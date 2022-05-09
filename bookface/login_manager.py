@@ -1,6 +1,6 @@
 from flask_login import LoginManager
 
-from bookface.bookface import app
+from bookface import app
 from bookface.auth.services.user_service import UserService
 
 login_manager = LoginManager(app)
