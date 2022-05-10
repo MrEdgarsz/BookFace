@@ -1,3 +1,4 @@
+from bookface.auth.auth import auth as auth_module
 from flask import Flask, render_template, Blueprint
 from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap
