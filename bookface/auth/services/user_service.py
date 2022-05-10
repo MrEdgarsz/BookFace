@@ -1,16 +1,14 @@
 import flask
 from flask_login import login_user
 
-
+from bookface import db
 from bookface.auth.models.user import User
-from bookface import  db
 from bookface.misc import singleton
 
 
 class UserService(metaclass=singleton.Singleton):
     def __init__(self):
-        self._engine = db
-        self.session = self._engine.session
+        self.session = db.session
 
     def create(self, user):
         self.session.add(user)
