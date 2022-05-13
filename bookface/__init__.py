@@ -15,6 +15,8 @@ db = SQLAlchemy(app)
 from bookface.auth.services.user_service import UserService
 from bookface.auth.routes import auth as auth_module
 app.register_blueprint(auth_module)
+from bookface.manage_users.routes import admin as admin_module
+app.register_blueprint(admin_module)
 
 from bookface.posts.services.post_service import PostService
 from bookface.posts.routes import postboard as postboard_module
