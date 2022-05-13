@@ -1,4 +1,5 @@
 from bookface import db
+from bookface.auth.models.user import User
 from bookface.auth.services.user_service import UserService
 from bookface.roles.models.role import Role
 from bookface.roles.services.roles_services import RolesService
@@ -16,6 +17,22 @@ class DBGenerator:
 
     def genData(self):
         self.genRoles()
+        self.genUsers()
+
+    def genUsers(self):
+        kitkuLover = User( username="Kitku_Lover", password_hash= "$2b$12$exW9JpDkAwjmMV6AMrHwNu6J2zVohEoj.donah7kYpSVMjJQUB47i",role_id=1)
+        dogoLover = User( username="Dogo_Lover",
+                          password_hash="$2b$12$exW9JpDkAwjmMV6AMrHwNu6J2zVohEoj.donah7kYpSVMjJQUB47i", role_id=3)
+        szopLover = User( username="Szop_Lover",
+                          password_hash="$2b$12$exW9JpDkAwjmMV6AMrHwNu6J2zVohEoj.donah7kYpSVMjJQUB47i", role_id=2)
+
+        stopkarz = User(username="Stopkarz",
+                         password_hash="$2b$12$exW9JpDkAwjmMV6AMrHwNu6J2zVohEoj.donah7kYpSVMjJQUB47i", role_id=4)
+                    
+        users = [kitkuLover, dogoLover, szopLover, stopkarz]
+        for user in users:
+            self.userService.create(user)
+        self.userService.flush()
 
     def genRoles(self):
         admin = Role(name="admin",
