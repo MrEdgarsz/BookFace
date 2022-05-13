@@ -34,3 +34,6 @@ class UserService(metaclass=singleton.Singleton):
             return User
         else:
             return None
+
+    def flush(self):
+        self.session.commit()
