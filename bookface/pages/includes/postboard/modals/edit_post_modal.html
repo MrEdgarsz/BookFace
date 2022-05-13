@@ -1,0 +1,19 @@
+<div class="modal fade" id="editPost-{{ post.id }}" tabindex="-1" aria-labelledby="editPostLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edycja posta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>  
+            <div class="modal-body">
+                <form action="{{ url_for('postboard.update_post', post_id=post.id) }}" method="POST">
+                    <textarea id="editPostForm" name="content">{{ post.description }}</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Nie</button>
+                <button type="submit" class="btn btn-success">Tak</button>
+                </form>
+            </div>
+      </div>
+    </div>
+</div>
