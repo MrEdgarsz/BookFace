@@ -18,6 +18,10 @@ app.register_blueprint(auth_module)
 from bookface.manage_users.routes import admin as admin_module
 app.register_blueprint(admin_module)
 
+from bookface.posts.services.post_service import PostService
+from bookface.posts.routes import postboard as postboard_module
+app.register_blueprint(postboard_module)
+
 
 @app.route("/")
 def index():

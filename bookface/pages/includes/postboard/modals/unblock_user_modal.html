@@ -1,0 +1,19 @@
+<div class="modal fade" id="unblockUser-{{ post.id }}" tabindex="-1" aria-labelledby="blockUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Odblokowanie użytkownika</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Jesteś pewien, że chcesz odblokować użytkownika <b>{{ post.user.username }}</b>?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Nie</button>
+                <a href="{{ url_for('postboard.unblock_user', user_id=post.user.id) }}" class="btn btn-warning">Tak</a>
+            </div>
+      </div>
+    </div>
+</div>
