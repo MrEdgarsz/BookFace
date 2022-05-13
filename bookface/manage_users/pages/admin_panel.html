@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{{ url_for('static',filename='admin_panel.css')}}
+{% block content %}
+<nav class="navbar navbar-light bg-primary" >
+    <a class="navbar-brand" href="../">
+        <img src="./kitku.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <p style="color:white; display:inline">BookFace</p>
+    </a>
+</nav>
+<div class="container col-6 ">
+
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Rola</th>
+                <th scope="col">Akcja</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <th scope="row">{{user.id}}</th>
+                <td>{{user.username}}</td>
+                <td>{{user.role.name}}</td>
+                <td>
+                    
+                    {% if user.role_id==4 %}
+                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}">Odblokuj</a>
+                    {% elif user.role_id==1 %}
+                    {% elif user.role_id==2 %}
+                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}">Zabierz uprawnienia</a>
+                    {% else %}
+                    <a href="{{ url_for('admin.block',user_id=user.id) }}">Zablokuj</a>
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
