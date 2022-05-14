@@ -6,11 +6,11 @@
     <div class="d-flex justify-content-center">
         <div class="mb-5">
             <form action="" method="POST">
-                <textarea id="postForm", name="description" placeholder="Napisz coś tutaj..."></textarea>
+                {{ form.hidden_tag() }}
+                {{ form.content(id="postForm", placeholder="Napisz coś tutaj...") }}
                 <div id="postFormTip" class="form-text"></div>
                 <br>
-                <!-- <button onclick="getValue()">Sprawdź zawartość</button> -->
-                <button type="submit" id="postFormSubmit" class="btn btn-primary">Dodaj post</button>
+                {{ form.submit(id="postFormSubmit", class="btn btn-primary") }}
             </form>
         </div>
     </div>

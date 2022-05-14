@@ -5,7 +5,17 @@ Post Board
 {% endblock %}
 
 {% block content %}
-<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <div class="container">
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }} 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% include "includes/global/components/button_scroll_to_top.html" %}
     {% include "includes/postboard/forms/add_post_form.html" %}
     <hr class="bg-primary border-2 border-top border-primary"></hr>
@@ -28,12 +38,8 @@ Post Board
                             {% if post.user.role.id != 3 %}
                                 [{{ post.user.role.name }}]
                             {% endif %}
-                            <small class="text-muted">
-                                {% if post.updated_at == now %}
-                                    Przed chwilą
-                                {% else %}
-                                    {{ post.updated_at.strftime('%d.%m.%Y %H:%M') }}
-                                {% endif %}
+                            <small class="text-muted" data-bs-toggle="tooltip" title="{{ post.updated_at.strftime('%d.%m.%Y %H:%M') }}">
+                                {{ post.created_at.strftime('%d.%m.%Y %H:%M') }}
                             </small>
                         </div>
                         {% if current_user.id != post.user.id %}
@@ -118,39 +124,68 @@ Post Board
         </div> 
 </div>
 <!-- TinyMCE  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/9ereik6l9j5n7qcn503nt1z19s7udhc57hl17hwtoz2o2eii/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+$(function () {
+    $('#postFormTip').hide();
+
     tinymce.init({
         selector: '#postForm',
+        language: 'pl',
+        resize: false,
         plugins: [
             'lists','link','image','charmap','preview','searchreplace','visualblocks',
             'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
         ],
+        init_instance_callback: (editor) => {
+            console.log(`Editor: ${editor.id} is now initialized.`);
+        },
         setup: function (editor) {
             editor.on('change', function () {
                 tinymce.triggerSave();
+                checkSubmit();
             });
         }
     });
 
-    var editor = document.getElementById("postForm");
-    var tip = document.getElementById("postFormTip");
-    var submit = document.getElementById("postFormSubmit");
+    tinymce.init({
+        selector: '.editPostForm',
+        language: 'pl',
+        resize: false,
+        plugins: [
+            'lists','link','image','charmap','preview','searchreplace','visualblocks',
+            'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
+        ],
+        init_instance_callback: (editor) => {
+            console.log(`Editor: ${editor.id} is now initialized.`);
+        },
+        setup: function (editor) {
+            editor.on('change', function () {
+                tinymce.triggerSave();
+                checkEditSubmit();
+            });
+        }
+    });
 
-    if (tinymce.get('postForm').getContent() == '')
-    {
-        console.log("Debug 1")
-        tip.textContent = "Aby zamieścić post na tablicy, należy najpierw wypełnić powyższy formularz.";
-        submit.disabled = true;
-    }
-    else {
-        console.log("Debug 2")
-        tip.textContent = "";
-        submit.disabled = false;
-    }
-
-    function getValue() {
-        console.log(tinymce.get('postForm').getContent().length)
-    }
+    $(document).on('click', '#postFormSubmit', checkSubmit);	
+	function checkSubmit() {
+		var editorValue = $('#postForm').val();			
+		var textEditorValue = $.trim($(editorValue).text());
+		
+		if (textEditorValue == '') {
+            $('#postFormSubmit').prop('disabled', true);
+			$('#postFormTip').show();
+			$('#postFormTip').html('Aby zamieścić post na tablicy, należy najpierw wypełnić powyższy formularz.');
+			return false;
+		}
+		else {
+            $('#postFormSubmit').prop('disabled', false);
+			$('#postFormTip').hide();
+			$('#postFormTip').html('');	
+            return true;
+		}
+	}
+});
 </script>
 {% endblock %}   
