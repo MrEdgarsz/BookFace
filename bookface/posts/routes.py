@@ -13,37 +13,23 @@ from bookface.posts.forms.post_form import PostForm
 from bookface.auth.services.user_service import UserService
 from bookface.auth.models.user import User
 
-# @postboard.route("/", methods=["GET", "POST"])
-# def postboard_page():
-#     db.postService = PostService()
-#     db.userService = UserService()
-#     posts = db.postService.get_all_by_created_at()
-#     form = PostForm()
-
-#     if form.validate_on_submit():
-#         post_to_create = Post(description=form.description.data, user_id=current_user.get_id())
-#         db.postService.create(post_to_create)
-#         db.postService.flush()
-#         flash("Pomyślnie dodano post na tablicę", category="success")
-
-#     if form.errors != {}:
-#         for error in form.errors.values():
-#             flash(f"Wystąpił błąd podczas dodania posta na tablicę: {error}", category="danger")
-
-#     return render_template("postboard.html", posts=posts, form=form)
-
 @postboard.route("/", methods=["GET", "POST"])
 def postboard_page():
     posts = PostService().get_all_by_created_at()
+    form = PostForm()
 
-    if request.method == "POST":
-        post_description = request.form['description']
-        post_to_create = Post(description=post_description, user_id=1)
+    if form.validate_on_submit():
+        post_to_create = Post(description=form.content.data, user_id=1)
         PostService().create(post_to_create)
         PostService().flush()
-        return redirect('/postboard')
-    else:
-        return render_template("postboard.html", posts=posts)
+        flash("Pomyślnie dodano twój post na tablicę", category="success")
+        return redirect(url_for('postboard.postboard_page'))
+
+    if form.errors != {}:
+        for error in form.errors.values():
+            flash(f"Wystąpił błąd podczas dodawania twojego posta na tablicę: {error}", category="danger")
+
+    return render_template("postboard.html", posts=posts, form=form)
 
 @postboard.route("/delete_post/<post_id>")
 def delete_post(post_id):
@@ -58,7 +44,7 @@ def update_post(post_id):
 
     if request.method == "POST":
         post_to_update.description = request.form['content']  
-        post_to_update.updated_at = datetime.now()    
+        post_to_update.updated_at = datetime.now   
 
     PostService().flush()
     return redirect(url_for('postboard.postboard_page')) 
