@@ -1,0 +1,39 @@
+.tox-tinymce {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.125);
+}
+
+.post {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.125);
+    border-radius: .50rem;
+}
+
+.post-header {
+    background: none;
+    border: none;
+}
+
+.post-info {
+    display: flex;
+}
+
+.post-info-user {
+    margin-left: 12px;
+}
+
+.post-info-user-name {
+    margin-bottom: 0;
+}
+
+.post-content {
+    padding-top: 0;
+}
+
+.post-options-btn {
+    margin-left: auto;
+}
+
+.user-avatar {
+    border-radius: 50%;
+    max-width: 52px;
+}
+
