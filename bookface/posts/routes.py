@@ -44,7 +44,7 @@ def update_post(post_id):
 
     if request.method == "POST":
         post_to_update.description = request.form['content']  
-        post_to_update.updated_at = datetime.now   
+        post_to_update.updated_at = datetime.now()   
 
     PostService().flush()
     return redirect(url_for('postboard.postboard_page')) 
