@@ -184,7 +184,8 @@ $(function () {
         setup: function (editor) {
             editor.on('input', function () {
                 tinymce.triggerSave();
-                checkEditPostForm(editor.id);
+                var content = tinymce.activeEditor.getContent();
+                checkEditPostForm(editor.id, content);
             });
         }
     });
@@ -211,10 +212,10 @@ function checkPostForm() {
 
 function checkEditModal(postId) {
     checkEditPostForm(postId);
-    setDefaultValueToPost(postId);
+    setPostDefaultValue(postId);
 }
 
-function setDefaultValueToPost(postId) {
+function setPostDefaultValue(postId) {
     const editPost = document.getElementById('editPost-' + postId);
     editPost.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
@@ -228,12 +229,12 @@ function setDefaultValueToPost(postId) {
     })
 }
 
-function checkEditPostForm(postId) {
+function checkEditPostForm(postId, postDesc) {
     var editorContent = $('#' + postId).val();
     var editorContentInText = $.trim($(editorContent).text());
     var submitBtn = postId + '-Submit'
 		
-    if (editorContentInText == '') {
+    if (editorContentInText == '' || editorContentInText == postDesc) {
         $('#' + submitBtn).prop('disabled', true);
     }
     else {
