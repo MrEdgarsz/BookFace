@@ -7,10 +7,11 @@
         <div class="mb-5">
             <form action="" method="POST">
                 {{ form.hidden_tag() }}
-                {{ form.content(id="postForm", placeholder="Napisz coś tutaj...") }}
-                <div id="postFormTip" class="form-text"></div>
+                {{ form.content(id="postForm", placeholder="Co ci chodzi po głowie?") }}
                 <br>
-                {{ form.submit(id="postFormSubmit", class="btn btn-primary", style="box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.125);") }}
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    {{ form.submit(id="postFormSubmit", class="btn btn-primary", disabled=true, style="font-weight: bold;") }}
+                </div>
             </form>
         </div>
     </div>

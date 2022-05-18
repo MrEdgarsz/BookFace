@@ -1,18 +1,18 @@
-<div class="modal fade" id="blockUser-{{ post.id }}" tabindex="-1" aria-labelledby="blockUserLabel" aria-hidden="true">
+<div class="modal fade" id="demoteUser-{{ post.id }}" tabindex="-1" aria-labelledby="demoteUserLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Zablokuj użytkownika</h5>
+                <h5 class="modal-title">Zabierz uprawnienia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
-                    Czy na pewno chcesz zablokować użytkownika <b>{{ post.user.username }}</b>?
+                    Czy na pewno chcesz zabrać uprawnienia użytkownikowi <b>{{ post.user.username }}</b>?
                 </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light text-primary" data-bs-dismiss="modal">Anuluj</button>
-                <a href="{{ url_for('postboard.block_user', user_id=post.user.id) }}" class="btn btn-primary">Zablokuj</a>
+                <a href="{{ url_for('postboard.unblock_user', user_id=post.user.id) }}" class="btn btn-primary">Zabierz</a>
             </div>
       </div>
     </div>

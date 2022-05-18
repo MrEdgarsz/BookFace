@@ -22,12 +22,12 @@ def postboard_page():
         post_to_create = Post(description=form.content.data, user_id=1)
         PostService().create(post_to_create)
         PostService().flush()
-        flash("Pomyślnie dodano twój post na tablicę", category="success")
+        flash("Pomyślnie opublikowano twój post", category="success")
         return redirect(url_for('postboard.postboard_page'))
 
     if form.errors != {}:
         for error in form.errors.values():
-            flash(f"Wystąpił błąd podczas dodawania twojego posta na tablicę: {error}", category="danger")
+            flash(f"Wystąpił błąd podczas publikacji twojego posta: {error}", category="danger")
 
     return render_template("postboard.html", posts=posts, form=form)
 
