@@ -4,17 +4,17 @@ Post Board
 {% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/postboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/postboard.css') }}">
+<div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
-    <div class="container">
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ message }} 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
     {% include "includes/global/components/button_scroll_to_top.html" %}
     {% include "includes/postboard/forms/add_post_form.html" %}
@@ -22,123 +22,139 @@ Post Board
     {% for post in posts %}
     {% include "includes/postboard/modals/block_user_modal.html" %}
     {% include "includes/postboard/modals/unblock_user_modal.html" %}
+    {% include "includes/postboard/modals/demote_user_modal.html" %}
     {% include "includes/postboard/modals/remove_post_modal.html" %}
-    {% include "includes/postboard/modals/edit_post_modal.html" %}    
-        <div class="card-deck">
-            <div class="card post">
-                <div class="card-header post-header">
-                    <div class="post-info">
-                        <img src="{{ url_for('static', filename='images/default_avatar.png') }}" class="user-avatar">
-                        <div class="post-info-user">
-                            <p class="card-title post-info-user-name">
-                                {% if post.user.role.id != 4 %}
-                                <b>{{ post.user.username }}</b>
-                                {% else %}
-                                <b class="text-muted">{{ post.user.username }}</b>
-                                {% endif %}
-                                {% if post.user.role.id != 3 %}
-                                <small>[{{ post.user.role.name }}]</small>
-                                {% endif %}    
-                            </p>
-                            <div>
-                                <small class="card-subtitle text-muted" data-bs-toggle="tooltip" title="{{ post.created_at.strftime('%d.%m.%Y %H:%M') }}">
-                                    {{ post.get_time_difference() }}
-                                </small>
-                                {% if post.updated_at != post.created_at %}
-                                <small class="card-subtitle text-muted" data-bs-toggle="tooltip" title="{{ post.updated_at.strftime('%d.%m.%Y %H:%M') }}">
-                                    · edytowany
-                                </small>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% if current_user.id != post.user.id %}
-                        <div class="btn-group post-options-btn" role="group">
-                            <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                </svg>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="postOptions">
-                                <li>
-                                    <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#editPost-{{ post.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-                                        </svg>
-                                        Edytuj post
-                                    </button>
-                                </li>
-                                {% if post.user.role.id != 4 %}
-                                <li>
-                                    {% if post.user.role.id == 2 %}
-                                    <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#blockUser-{{ post.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                            <path fill-rule="evenodd" d="M12.146 5.146a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
-                                        </svg>
-                                        Zabierz uprawienia
-                                    </button>
-                                    {% else %}
-                                    <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#blockUser-{{ post.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                            <path fill-rule="evenodd" d="M12.146 5.146a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
-                                        </svg>
-                                        Zablokuj użytkownika
-                                    </button>
-                                    {% endif %}
-                                </li>
-                                {% else %}
-                                <li>
-                                    <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#unblockUser-{{ post.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                                          </svg>
-                                        Odblokuj użytkownika
-                                    </button>
-                                </li>
-                                {% endif %}
-                                <li>
-                                    <button type="button" class="btn btn-danger btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#removePost-{{ post.id }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                        </svg>
-                                        Usuń post
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    {% endif %}    
-                    </div>        
-                </div>
-                <div class="card-body post-content">   
-                    <p class="card-text">{{ post.description | safe }}</p>
-                    <hr>
-                    <p class="card-text">
-                        <a href="send_like/{{ post.id}}" class="btn btn-outline-danger" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.likes == 1 %} Ten post podoba się <b>{{ post.likes }}</b> osobie {% elif post.likes > 1 %} Ten post podoba się <b>{{ post.likes }}</b> osobom {% endif %}">
-                            <i class="bi bi-balloon"></i>
-                            {% if post.likes > 0 %}
-                                {{ post.likes }}
+    {% include "includes/postboard/modals/edit_post_modal.html" %}
+    <div class="card-deck">
+        <div class="card post">
+            <div class="card-header post-header">
+                <div class="post-info">
+                    <img src="{{ url_for('static', filename='images/default-avatar.png') }}" class="user-avatar">
+                    <div class="post-info-user">
+                        <p class="card-title post-info-user-name">
+                            {% if post.user.role.id != 4 %}
+                            <b>{{ post.user.username }}</b>
+                            {% else %}
+                            <b class="text-muted">{{ post.user.username }}</b>
                             {% endif %}
-                        </a>
-                    </p>
+                            {% if post.user.role.id != 3 %}
+                            {% if post.user.role.id == 4 %}
+                            <span class="badge bg-danger bg-opacity-10 text-danger">
+                            {% else %}
+                            <span class="badge bg-primary bg-opacity-10 text-primary">
+                            {% endif %}
+                                {{ post.user.role.name }}
+                            </span>
+                            {% endif %}
+                        </p>
+                        <div>
+                            <small class="card-subtitle text-muted" data-bs-toggle="tooltip" title="{{ post.created_at.strftime('%A, %d.%m.%Y %H:%M') }}">
+                                {{ post.get_time_difference() }}
+                            </small>
+                            {% if post.updated_at != post.created_at %}
+                            <small class="card-subtitle text-muted" data-bs-toggle="tooltip" title="{{ post.updated_at.strftime('%A, %d.%m.%Y %H:%M') }}">
+                                · edytowany
+                            </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if current_user.id != post.user.id %}
+                    <div class="btn-group post-options-btn" role="group">
+                        <button class="btn btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="postOptions">
+                            <li>
+                                <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#editPost-{{ post.id }}" data-bs-defaultvalue="{{ post.description }}" onclick="setDefaultValueToPost({{ post.id }})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                                    </svg>
+                                    Edytuj post
+                                </button>
+                            </li>
+                            {% if post.user.role.id != 4 %}
+                            <li>
+                                {% if post.user.role.id == 2 %}
+                                <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#demoteUser-{{ post.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                        <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5.009 5.009 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334z"/>
+                                    </svg>
+                                    Zabierz uprawienia
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#blockUser-{{ post.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                                    </svg>
+                                    Zablokuj użytkownika
+                                </button>
+                                {% endif %}
+                            </li>
+                            {% else %}
+                            <li>
+                                <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#unblockUser-{{ post.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+                                        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+                                    </svg>
+                                    Odblokuj użytkownika
+                                </button>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <button type="button" class="btn btn-danger btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#removePost-{{ post.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    Usuń post
+                                </button>
+                            </li>
+                            <!-- <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <button type="button" class="btn btn-danger btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#removePost-{{ post.id }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                                        <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+                                        <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+                                    </svg>
+                                    Zgłoś post
+                                </button>
+                            </li> -->
+                        </ul>
+                    </div>
+                    {% endif %}    
                 </div>
             </div>
-            <br>
+            <div class="card-body post-content">
+                <p class="card-text">{{ post.description | safe }}</p>
+                <hr>
+                <p class="card-text">
+                    <a href="send_like/{{ post.id}}" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.likes == 1 %} Ten post podoba się <b>{{ post.likes }}</b> osobie {% elif post.likes > 1 %} Ten post podoba się <b>{{ post.likes }}</b> osobom {% endif %}">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                        {% if post.likes > 0 %}
+                        {{ post.likes }}
+                        {% else %}
+                        Lubię to!
+                        {% endif %}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <br>
         {% endfor %}
-        </div> 
+    </div>
 </div>
 <!-- TinyMCE  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/9ereik6l9j5n7qcn503nt1z19s7udhc57hl17hwtoz2o2eii/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 $(function () {
-    $('#postFormTip').hide();
-
+    // Init TinyMCE editors
     tinymce.init({
         selector: '#postForm',
         language: 'pl',
+        resize: false,
         plugins: [
             'lists','link','image','charmap','preview','searchreplace','visualblocks',
             'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
@@ -147,9 +163,9 @@ $(function () {
             console.log(`Editor: ${editor.id} is now initialized.`);
         },
         setup: function (editor) {
-            editor.on('change', function () {
+            editor.on('input', function () {
                 tinymce.triggerSave();
-                checkSubmit();
+                checkPostForm();
             });
         }
     });
@@ -157,6 +173,7 @@ $(function () {
     tinymce.init({
         selector: '.editPostForm',
         language: 'pl',
+        resize: false,
         plugins: [
             'lists','link','image','charmap','preview','searchreplace','visualblocks',
             'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
@@ -165,31 +182,63 @@ $(function () {
             console.log(`Editor: ${editor.id} is now initialized.`);
         },
         setup: function (editor) {
-            editor.on('change', function () {
+            editor.on('input', function () {
                 tinymce.triggerSave();
-                checkEditSubmit();
+                checkEditPostForm(editor.id);
             });
         }
     });
 
-    $(document).on('click', '#postFormSubmit', checkSubmit);	
-    function checkSubmit() {
-        var editorValue = $('#postForm').val();
-        var textEditorValue = $.trim($(editorValue).text());
-		
-        if (textEditorValue == '') {
-            $('#postFormSubmit').prop('disabled', true);
-            $('#postFormTip').show();
-            $('#postFormTip').html('Aby zamieścić post na tablicy, należy najpierw wypełnić powyższy formularz.');
-            return false;
+    // Prevent Bootstrap modal dialog from blocking focusin
+    document.addEventListener('focusin', (e) => {
+        if (e.target.closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+            e.stopImmediatePropagation();
         }
-        else {
-            $('#postFormSubmit').prop('disabled', false);
-            $('#postFormTip').hide();
-            $('#postFormTip').html('');
-            return true;
-        }
-    }
+    });
 });
+
+function checkPostForm() {
+    var editorContent = $('#postForm').val();
+    var editorContentInText = $.trim($(editorContent).text());
+
+    if (editorContentInText == '') {
+        $('#postFormSubmit').prop('disabled', true);
+    }
+    else {
+        $('#postFormSubmit').prop('disabled', false);
+    }
+}
+
+function checkEditModal(postId) {
+    checkEditPostForm(postId);
+    setDefaultValueToPost(postId);
+}
+
+function setDefaultValueToPost(postId) {
+    const editPost = document.getElementById('editPost-' + postId);
+    editPost.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const postContent = button.getAttribute('data-bs-defaultvalue');
+        tinymce.activeEditor.setContent(postContent);
+    })
+    editPost.addEventListener('hide.bs.modal', event => {
+        const button = event.relatedTarget;
+        const postContent = button.getAttribute('data-bs-defaultvalue');
+        tinymce.activeEditor.setContent(postContent);
+    })
+}
+
+function checkEditPostForm(postId) {
+    var editorContent = $('#' + postId).val();
+    var editorContentInText = $.trim($(editorContent).text());
+    var submitBtn = postId + '-Submit'
+		
+    if (editorContentInText == '') {
+        $('#' + submitBtn).prop('disabled', true);
+    }
+    else {
+        $('#' + submitBtn).prop('disabled', false);
+    }
+}
 </script>
-{% endblock %}   
+{% endblock %}
