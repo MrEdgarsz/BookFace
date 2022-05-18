@@ -1,3 +1,4 @@
+from datetime import datetime
 from random import randint
 from bookface import db
 from bookface.auth.models.user import User
@@ -37,22 +38,22 @@ class DBGenerator:
         self.userService.flush()
 
     def genRoles(self):
-        admin = Role(name="administrator",
+        admin = Role(name="Administrator",
                      can_add_post=True,
                      can_block_user=True,
                      can_remove_post=True,
                      )
-        moderator = Role(name="moderator",
+        moderator = Role(name="Moderator",
                          can_add_post=True,
                          can_block_user=False,
                          can_remove_post=True,
                          )
-        user = Role(name="użytkownik",
+        user = Role(name="Użytkownik",
                     can_add_post=True,
                     can_block_user=False,
                     can_remove_post=False,
                     )
-        blockedUser = Role(name="zablokowany",
+        blockedUser = Role(name="Zablokowany",
                            can_add_post=False,
                            can_block_user=False,
                            can_remove_post=False,
@@ -63,11 +64,12 @@ class DBGenerator:
         self.roleService.flush()
 
     def genPosts(self):
-        post1 = Post(description="<img src='https://twojememy.pl/wp-content/uploads/2020/12/Kitku-w-szoku.jpg' width='297' height='294' alt="" data-mce-src='https://twojememy.pl/wp-content/uploads/2020/12/Kitku-w-szoku.jpg' style='display: block; margin-left: auto; margin-right: auto;' data-mce-style='display: block; margin-left: auto; margin-right: auto;'><br>Nie wiem, jak wy, ale ja śmiechłem😄", likes = randint(3,21), user_id=1)
-        post2 = Post(description="<h2>Czym jest Szop?</h2><b>Szop</b> to rodzaj ssaka z rodziny szopowatych (po łacinie <i>Procyonidae</i>).<br>Rodzaj obejmuje gatunki występujące w Ameryce. W Polsce stwierdzono od 1927 r. obecność szopa pracza żyjącego w warunkach naturalnych. Jest to populacja uciekinierów z hodowli. Przewidywane jest rozprzestrzenianie się tego gatunku na terenie całej Polski.<br>Źródło: <a href='https://pl.wikipedia.org/wiki/Szop' data-mce-href='https://pl.wikipedia.org/wiki/Szop'>https://pl.wikipedia.org/wiki/Szop</a>", likes = randint(3,21), user_id=3)
-        post3 = Post(description="Psy są najlepsze. Koniec kropka. <b>Don't change my mind!</b>", likes = 0, user_id=2)
+        post0 = Post(description="<h1 style='text-align: center;'>Witajcie na BookFace!</h1><p style='text-align: center;'>Zarówno całej administracji jak i moderacji jest niezmiernie miło gościć was na naszej nowopowstałej platformie. Mamy nadzieję, że będziecie się tu świetnie bawić.</p>", created_at = datetime(2022,4,6,19,2), updated_at = datetime(2022,4,6,19,2), likes = randint(15,21), user_id=1)
+        post1 = Post(description="<p><img src='https://twojememy.pl/wp-content/uploads/2020/12/Kitku-w-szoku.jpg' width='297' height='294' alt="" data-mce-src='https://twojememy.pl/wp-content/uploads/2020/12/Kitku-w-szoku.jpg' style='display: block; margin-left: auto; margin-right: auto;' data-mce-style='display: block; margin-left: auto; margin-right: auto;'><br>Nie wiem, jak wy, ale ja śmiechłem😄</p>", created_at = datetime(2022,5,14,16,49), updated_at = datetime(2022,5,14,16,49), likes = randint(3,21), user_id=1)
+        post2 = Post(description="<h2>Czym jest Szop?</h2><p><strong>Szop</strong> to rodzaj ssaka z rodziny szopowatych (po łacinie <em>Procyonidae</em>).<br>Rodzaj obejmuje gatunki występujące w Ameryce. W Polsce stwierdzono od 1927 r. obecność szopa pracza żyjącego w warunkach naturalnych. Jest to populacja uciekinierów z hodowli. Przewidywane jest rozprzestrzenianie się tego gatunku na terenie całej Polski.<br>Źródło: <a href='https://pl.wikipedia.org/wiki/Szop' data-mce-href='https://pl.wikipedia.org/wiki/Szop'>https://pl.wikipedia.org/wiki/Szop</a></p>", likes = randint(3,21), user_id=3)
+        post3 = Post(description="<p>Psy są najlepsze. Koniec kropka. <strong>Don't change my mind!</strong></p>", likes = 0, user_id=2)
                     
-        posts = [post1, post2, post3]
+        posts = [post0, post1, post2, post3]
         for post in posts:
             self.postService.create(post)
         self.postService.flush()
