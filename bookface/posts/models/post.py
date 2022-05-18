@@ -1,6 +1,8 @@
 from bookface import db
 from sqlalchemy.orm import backref
-from datetime import datetime, timedelta
+from datetime import datetime
+import locale
+from calendar import isleap, monthrange
 
 class Post(db.Model):
     __tablename__ = "posts"
@@ -16,28 +18,31 @@ class Post(db.Model):
         super().__init__(*args, **kwargs)
 
     def get_time_difference(self):
+        locale.setlocale(locale.LC_ALL, "")
         time_difference = datetime.now() - self.created_at
-        time_difference_sec = time_difference.seconds
 
         MIN = 60
         HOUR = 60*MIN
-        DAY = 24*HOUR
-        MONTH = 30*DAY
-        YEAR = 12*MONTH
+        DAYS_OF_CURRENT_MONTH = monthrange(int(self.created_at.year), int(self.created_at.month))[1]
 
-        if (time_difference_sec < MIN):
+        if isleap(self.created_at.year):
+            DAYS_OF_YEAR = 366
+        else:
+            DAYS_OF_YEAR = 365
+
+        if (time_difference.seconds < MIN and time_difference.days < 1):
             result = "Przed chwilą"
-        elif (time_difference_sec >= MIN and time_difference_sec < HOUR):
-            result = f"{int(time_difference_sec/MIN)} min temu"
-        elif (time_difference_sec >= HOUR and time_difference_sec < DAY):
-            result = f"{int(time_difference_sec/HOUR)} godz. temu"
-        elif (time_difference_sec >= DAY and time_difference_sec < (2*DAY)):
+        elif (time_difference.seconds >= MIN and time_difference.seconds < HOUR and time_difference.days < 1):
+            result = f"{int(time_difference.seconds/MIN)} min temu"
+        elif (time_difference.seconds >= HOUR and time_difference.days < 1):
+            result = f"{int(time_difference.seconds/HOUR)} godz. temu"
+        elif (time_difference.days == 1 and time_difference.days < 2):
             creation_date = self.created_at.strftime("%H:%M")
             result = f"Wczoraj o {creation_date}"
-        elif (time_difference_sec >= (2*DAY) and time_difference_sec < MONTH):
-            result = time_difference.strftime("%d.%B %H:%M")
-        elif (time_difference_sec >= MONTH and time_difference_sec < YEAR):
-            result = time_difference.strftime("%d.%B")
+        elif (time_difference.days >= 2 and time_difference.days < DAYS_OF_CURRENT_MONTH):
+            result = self.created_at.strftime("%d %b %H:%M")
+        elif (time_difference.days >= DAYS_OF_CURRENT_MONTH and time_difference.days < DAYS_OF_YEAR):
+            result = self.created_at.strftime("%d %b")
         else:
-            result = time_difference.strftime("%d %B %Y")
+            result = self.created_at.strftime("%d %b %Y")
         return result
