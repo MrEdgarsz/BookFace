@@ -6,9 +6,13 @@ from bookface.roles.models.role import Role
 from bookface.roles.services.roles_services import RolesService
 
 class User(db.Model, UserMixin):
-    # noinspection SpellCheckingInspection
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     password_hash = db.Column(db.String(60), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False)
@@ -22,7 +26,7 @@ class User(db.Model, UserMixin):
     def password(self, plain_text_password):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
-    def check_password_correction(self, attempted_password):
+    def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
     # def role(self):

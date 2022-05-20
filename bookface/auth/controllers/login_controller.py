@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import render_template, flash, request, url_for
 from flask_login import login_user
 from flask_wtf import FlaskForm
+from werkzeug.utils import redirect
 
 from bookface.auth.forms.login_form import LoginForm
 from bookface.auth.services.user_service import UserService
@@ -12,11 +13,14 @@ def handle_sign_in():
         result = UserService().authenticate(username=form.username.data, password=form.password.data)
         if result is not None:
             login_user(result)
+            next = request.args.get('next')
+            if next is None or not next.startswith('/'):
+                next = url_for('auth.authenticated')
+            print(next)
+            return redirect(next)
         else:
-            form.errors.append("Invalid username or password")
+            flash("Invalid username or password", "error")
     form.data.update({'password': ''})
     return render_template("sign_in_page.html", form=form)
 
 
-def sign_in_with_form():
-    return render_template("index.html")
