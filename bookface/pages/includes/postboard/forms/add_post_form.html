@@ -1,3 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{{ url_for('static',filename='admin_panel.css')}}
+{% block content %}
+<nav class="navbar navbar-light bg-primary">
+    <a class="navbar-brand" href="../">
+        <img src="{{ url_for('static',filename='/images/bookface-logo.svg')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <p style="color:white; display:inline">BookFace</p>
+    </a>
+</nav>
 <figure class="text-center">
     <div class="mb-3">
         <br>
@@ -16,3 +26,4 @@
         </div>
     </div>
 </figure>
+{% endblock %}
