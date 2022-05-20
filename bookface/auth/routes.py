@@ -32,7 +32,3 @@ def logout():
     return redirect(url_for('auth.sign_in'))
 
 
-@auth.route("/authenticated")
-@login_required
-def authenticated():
-    return render_template("index.html")

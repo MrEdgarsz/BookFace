@@ -5,11 +5,13 @@ from bookface import db, bcrypt
 from bookface.roles.models.role import Role
 from bookface.roles.services.roles_services import RolesService
 
+
 class User(db.Model, UserMixin):
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, role_id=None):
         self.username = username
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.role_id = role_id
 
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

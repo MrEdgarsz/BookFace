@@ -12,7 +12,7 @@ class UserService(metaclass=singleton.Singleton):
         self.session = db.session
 
     def create(self, user):
-        role = RolesService().getRoleByName("user")
+        role = RolesService().getRoleById(1)
         user.role_id = role.id
         self.session.add(user)
         self.session.commit()

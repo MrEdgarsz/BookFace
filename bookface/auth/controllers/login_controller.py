@@ -15,7 +15,7 @@ def handle_sign_in():
             login_user(result)
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
-                next = url_for('auth.authenticated')
+                next = url_for('postboard.postboard_page')
             print(next)
             return redirect(next)
         else:

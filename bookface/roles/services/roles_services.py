@@ -10,6 +10,9 @@ class RolesService(metaclass=singleton.Singleton):
         self._engine = db
         self.session = self._engine.session
 
+    def getRoleById(self, id):
+        return self.session.query(Role).filter_by(id=id).first()
+
     def getRoleByName(self, name):
         return self.session.query(Role).filter_by(name=name).first()
 
