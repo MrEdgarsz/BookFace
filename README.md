@@ -50,7 +50,6 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    - Each row is a form able to edit user when you click edit button
    - edit button becomes save button when editing is enabled
    - block/unblock button
-   - hide all posts feature
    - show posts button which redirects to post board with filtered posts of this user
 8. Main page
    - Sign in to access information
@@ -59,3 +58,20 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    - information about being blocked
    - some form to contact page administrators?
    - 404 page
+
+
+### TODO
+| Finished           | Task                                                                                                                                                                                                                                         | Person |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
+| :white_check_mark: | Finish authorization                                                                                                                                                                                                                         | Edgar  |
+|                    | Create 404 page                                                                                                                                                                                                                              |        |
+|                    | Add "Promote to Moderator/Administrator function"                                                                                                                                                                                            |        |
+|                    | remove prefixes from routes (aka /auth/login should be just /login)                                                                                                                                                                          |        |
+|                    | create a first page (the one that users sees depending if he is signed in or not etc                                                                                                                                                         |        |
+|                    | all function routes should be behind basic and role authorization (like /block_user)                                                                                                                                                         |        |
+|                    | add a "blocked user page" that we show to a user that is blocked                                                                                                                                                                             |        |
+|                    | fix page titles depending on location and current user (I would opt for just "BookFace - Lose time with your friends" everywhere                                                                                                             |        |
+|                    | clean project architecture to follow the same syntax as auth (for example posts should have pages folder and store all views there)                                                                                                          |        |
+|                    | Make sure that all forms properly handle errors and are informative for users                                                                                                                                                                |        |
+|                    | Change all urls to some user-friendly simple urls and do more behind users back (first page should be posts automatically we don't want to redirect user and function pages aka /block_user should redirect back to page that you came from) |        |
+|                    | Have Fun Coding :tada:                                                                                                                                                                                                                       |        |
