@@ -2,7 +2,8 @@ from flask_login import UserMixin
 from sqlalchemy.orm import backref
 
 from bookface import db, bcrypt
-
+from bookface.roles.models.role import Role
+from bookface.roles.services.roles_services import RolesService
 
 class User(db.Model, UserMixin):
     # noinspection SpellCheckingInspection
@@ -23,3 +24,6 @@ class User(db.Model, UserMixin):
 
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
+
+    # def role(self):
+    #     return RolesService().get_by_id(self.role_id)
