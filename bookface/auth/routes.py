@@ -10,14 +10,15 @@ from flask import Blueprint
 from bookface.auth.controllers.register_controller import handle_sign_up
 
 
+# @auth.route('/')
+# def home():
+#     return render_template("sign_in_page.html")
+
 @auth.route('/')
-def home():
-    return render_template("index.html")
-
-
 @auth.route("/login", methods=['POST', 'GET'])
 def sign_in():
     return handle_sign_in()
+
 
 
 @auth.route("/register", methods=['POST', 'GET'])
