@@ -23,6 +23,7 @@ class DBGenerator:
     def genData(self):
         self.genRoles()
         self.genUsers()
+        self.genPosts()
 
     def genUsers(self):
         kitkuLover = User(username="Kitku_Lover", password="test1234", role_id=1)
