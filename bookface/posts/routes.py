@@ -31,36 +31,29 @@ def postboard_page():
 
     return render_template("postboard.html", posts=posts, form=form)
 
-@postboard.route("/delete_post/<post_id>")
+@postboard.route("/edit/<post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    post_to_edit = PostService().get_by_id(post_id)
+
+    if request.method == "POST":
+        post_to_edit.description = request.form['content']  
+        post_to_edit.updated_at = datetime.now()   
+
+    PostService().flush()
+    return redirect(url_for('postboard.postboard_page')) 
+
+@postboard.route("/delete/<post_id>")
 def delete_post(post_id):
     post_to_delete = PostService().get_by_id(post_id)
     PostService().delete(post_to_delete)
     PostService().flush()
     return redirect(url_for('postboard.postboard_page')) 
 
-@postboard.route("/update_post/<post_id>", methods=["GET", "POST"])
-def update_post(post_id):
-    post_to_update = PostService().get_by_id(post_id)
-
-    if request.method == "POST":
-        post_to_update.description = request.form['content']  
-        post_to_update.updated_at = datetime.now()   
-
-    PostService().flush()
-    return redirect(url_for('postboard.postboard_page')) 
-
-@postboard.route("/send_like/<post_id>", methods=["GET", "POST"])
-def send_like(post_id):
-    post_to_update = PostService().get_by_id(post_id)
-    post_to_update.likes += 1
-    PostService().flush() 
-    return redirect(url_for('postboard.postboard_page')) 
-
 @postboard.route("/block_user/<user_id>")
 def block_user(user_id):
     user_to_block = UserService().get_by_id(user_id)
     user_to_block.role_id = 4
-    UserService().flush() 
+    UserService().flush()
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/unblock_user/<user_id>")
@@ -68,4 +61,23 @@ def unblock_user(user_id):
     user_to_unblock = UserService().get_by_id(user_id)
     user_to_unblock.role_id = 3
     UserService().flush()
+    return redirect(url_for('postboard.postboard_page')) 
+
+@postboard.route("/like/<post_id>")
+def like_post(post_id):
+    post_to_update = PostService().get_by_id(post_id)
+    post_to_update.likes += 1
+    # post_to_update.likers.append(current_user)
+    PostService().flush() 
+    return redirect(url_for('postboard.postboard_page')) 
+
+@postboard.route("/unlike/<post_id>")
+def unlike_post(post_id):
+    post_to_update = PostService().get_by_id(post_id)
+
+    if post_to_update.likes > 0:
+        post_to_update.likes -= 1
+        # post_to_update.likers.remove(current_user)
+        PostService().flush()
+
     return redirect(url_for('postboard.postboard_page')) 
