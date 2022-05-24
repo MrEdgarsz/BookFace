@@ -14,13 +14,13 @@ class ManageUsersService(metaclass=singleton.Singleton):
     
     def ban_user(self,user_id):
         user = self.session.query(User).filter_by(id=user_id).first()
-        role = self.session.query(Role).filter_by(name="blocked_user").first()
+        role = self.session.query(Role).filter_by(name="Zablokowany").first()
         user.role = role
         return self.session.merge(user)
 
     def unban_user(self, user_id):
         user = self.session.query(User).filter_by(id=user_id).first()
-        role = self.session.query(Role).filter_by(name="user").first()
+        role = self.session.query(Role).filter_by(name="Użytkownik").first()
         user.role = role
         return self.session.merge(user)
 
