@@ -1,33 +1,9 @@
-<!-- HTML code -->
-<button id="btnScrollToTop">
+<button id="btnScrollToTop" class="btn-primary position-fixed border-0 text-white rounded-circle shadow" style="right: 20px; bottom: 20px; outline: none; cursor: pointer; display: none; height: 50px; width: 50px; z-index: 1001 !important;
+">
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
     </svg>
 </button>
-<!-- CSS style -->
-<style>
-    #btnScrollToTop {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        border: none;
-        background-color: #0d6efd;
-        border-radius: 50%;
-        color: #ffffff;
-        outline: none;
-        cursor: pointer;
-        display: none;
-        height: 50px;
-        width: 50px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-        z-index: 1001 !important;
-    }
-
-    #btnScrollToTop:hover {
-        background-color: #0b62e3;
-    }
-</style>
-<!-- JS script -->
 <script>
     window.addEventListener("scroll", () => {
         const scrolled = window.scrollY;
