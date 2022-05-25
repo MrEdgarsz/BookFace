@@ -28,10 +28,9 @@ class DBGenerator:
     def genUsers(self):
         kitkuLover = User(username="Kitku_Lover", password="test1234", role_id=1)
         dogoLover = User(username="Dogo_Lover",
-                         password="test1234", role_id=3)
-        szopLover = User(username="Szop_Lover",
                          password="test1234", role_id=2)
-
+        szopLover = User(username="Szop_Lover",
+                         password="test1234", role_id=3)
         stopkarz = User(username="Stopkarz",
                         password="test1234", role_id=4)
 
@@ -61,7 +60,7 @@ class DBGenerator:
                            can_block_user=False,
                            can_remove_post=False,
                            )
-        roles = [user, moderator, moderator, blockedUser]
+        roles = [admin, moderator, user, blockedUser]
         for role in roles:
             self.roleService.addRole(role)
         self.roleService.flush()
