@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-<div class="container">
+<nav class="navbar navbar-light bg-primary p-2">
+    <div class="row">
+        <h1 class="blue-centered-header" style="color: white;">BookFace</h1>
+        <h3 class="blue-centered-header" style="font-style: italic;color: white;">Lose your time with friends!</h3>
+    </div>
+</nav>
+
+<div class="container py-2">
     <div class="row justify-content-center">
         <div class="col-4">
             <div class="container black">
@@ -18,7 +25,7 @@
                                     {% endfor %}
                                 {% endif %}
                             {% endwith %}
-                            {{ wtf.form_field(field, class="btn btn-primary btn-block") }}
+                            {{ wtf.form_field(field, class="btn btn-primary btn-block my-2") }}
                         {% else %}
                          {{ wtf.form_field(field) }}
                         {% endif %}
