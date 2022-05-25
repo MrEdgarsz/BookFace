@@ -70,8 +70,9 @@
       })
    </script>
    <!-- Base Footer  -->
-   <div class="container">
-      <footer class="py-3 my-4">
+   <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@################################TEMPORARY DISABLE FOOTER AT postboard_page!!!!!!@@@@@@@@@######### -->
+   {% if url_for(request.endpoint) != url_for('postboard.postboard_page') %}
+      <footer class="footer " style="bottom:0;position: absolute;width: 100%;">
          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-link px-2 text-muted">Dominik Edgar Szpilski, 147915</li>
             <li class="nav-link px-2 text-muted">Radosław Michalak, 147406</li>
@@ -86,7 +87,7 @@
            </a>
          </p>
       </footer>
-   </div>
+      {% endif %}
    <!-- End Base Footer  -->
 </body>
 </html>
