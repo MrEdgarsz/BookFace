@@ -1,5 +1,5 @@
 from flask import render_template, url_for
-from flask_login import login_required, logout_user
+from flask_login import current_user, login_required, logout_user
 from werkzeug.utils import redirect
 
 from bookface import bcrypt
@@ -17,12 +17,16 @@ from bookface.auth.controllers.register_controller import handle_sign_up
 @auth.route('/')
 @auth.route("/login", methods=['POST', 'GET'])
 def sign_in():
+    if current_user.is_authenticated:
+        return redirect(url_for('postboard.postboard_page'))
     return handle_sign_in()
 
 
 
 @auth.route("/register", methods=['POST', 'GET'])
 def sign_up():
+    if current_user.is_authenticated:
+        return redirect(url_for('postboard.postboard_page'))
     return handle_sign_up()
 
 
