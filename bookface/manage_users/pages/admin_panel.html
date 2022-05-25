@@ -24,15 +24,29 @@
                 <td>{{user.role.name}}</td>
                 <td>
                     
-                    {% if user.role_id==4 %}
-                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}">Odblokuj</a>
-                    {% elif user.role_id==1 %}
-                    {% elif user.role_id==2 %}
-                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}">Zabierz uprawnienia</a>
+                    {% if user.role_id!=1 and user.role_id!=4 %}
+                    <a href="{{ url_for('admin.promote',user_id=user.id,role='Administrator') }}"  type="button" class="btn btn-sm btn-outline-primary">Awansuj na administratora</a>
+                    {% endif %}
+                    {% if user.role_id!=2 and user.role_id!=4 %}
+                    {% if user.role_id==1 %}
+                    <a href="{{ url_for('admin.promote',user_id=user.id,role='Moderator') }}" type="button"
+                        class="btn btn-sm btn-outline-danger">Zdegraduj do moderatora</a>
                     {% else %}
-                    <a href="{{ url_for('admin.block',user_id=user.id) }}">Zablokuj</a>
+                    <a href="{{ url_for('admin.promote',user_id=user.id,role='Moderator') }}" type="button"
+                        class="btn btn-sm btn-outline-primary">Awansuj na moderatora</a>
+                    {% endif %}
                     {% endif %}
 
+                    
+                    {% if user.role_id==4 %}
+                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}"  type="button" class="btn btn-sm btn-outline-primary">Odblokuj</a>
+                    {% elif user.role_id==1 %}
+                    {% elif user.role_id==2 %}
+                    <a href="{{ url_for('admin.unblock',user_id=user.id) }}" type="button" class="btn btn-sm btn-outline-danger">Zabierz uprawnienia</a>
+                    {% else %}
+                    <a href="{{ url_for('admin.block',user_id=user.id) }}" type="button" class="btn btn-sm btn-outline-danger">Zablokuj</a>
+                    {% endif %}
+                    
                 </td>
             </tr>
             {% endfor %}
