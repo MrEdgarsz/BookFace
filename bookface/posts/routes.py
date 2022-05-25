@@ -14,12 +14,13 @@ from bookface.auth.services.user_service import UserService
 from bookface.auth.models.user import User
 
 @postboard.route("/", methods=["GET", "POST"])
+@login_required
 def postboard_page():
     posts = PostService().get_all_by_created_at()
     form = PostForm()
 
     if form.validate_on_submit():
-        post_to_create = Post(description=form.content.data, user_id=1)
+        post_to_create = Post(description=form.content.data, user_id=current_user.id)
         PostService().create(post_to_create)
         PostService().flush()
         flash("Pomyślnie opublikowano twój post", category="success")
