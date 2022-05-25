@@ -5,6 +5,7 @@ from datetime import datetime
 from time import strftime
 
 from bookface import db
+from bookface.manage_users.services.manage_users_service import ManageUsersService
 from bookface.posts import postboard
 from bookface.posts.models.post import Post
 from bookface.posts.services.post_service import PostService
@@ -52,16 +53,14 @@ def delete_post(post_id):
 
 @postboard.route("/block_user/<user_id>")
 def block_user(user_id):
-    user_to_block = UserService().get_by_id(user_id)
-    user_to_block.role_id = 4
-    UserService().flush()
+    ManageUsersService().ban_user(user_id)
+    ManageUsersService().flush()
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/unblock_user/<user_id>")
 def unblock_user(user_id):
-    user_to_unblock = UserService().get_by_id(user_id)
-    user_to_unblock.role_id = 3
-    UserService().flush()
+    ManageUsersService().unban_user(user_id)
+    ManageUsersService().flush()
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/like/<post_id>")
