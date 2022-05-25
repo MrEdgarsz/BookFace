@@ -43,16 +43,6 @@ BookFace - Lose time with your friends
 <div class="container">
     {% include "includes/global/components/button_scroll_to_top.html" %}
     {% include "includes/postboard/forms/add_post_form.html" %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
     {% for post in posts %}
     {% include "includes/postboard/modals/block_user_modal.html" %}
     {% include "includes/postboard/modals/unblock_user_modal.html" %}
