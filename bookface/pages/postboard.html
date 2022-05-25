@@ -50,10 +50,14 @@ BookFace - Lose time with your friends
     {% include "includes/postboard/modals/remove_post_modal.html" %}
     {% include "includes/postboard/modals/edit_post_modal.html" %}
     <!-- post -->
-    <div class="post border p-3 mb-0 ms-auto me-auto rounded shadow-sm">
+    <div class="post p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm" style="border: 2px solid#eee;">
         <div class="d-flex">
             <!-- avatar -->
+            {% if post.user.id == current_user.id %}
+            <img src="{{ url_for('static', filename='images/default-avatar.png') }}" alt="avatar" class="rounded-circle me-2 border border-success border-3" style="max-width: 52px; object-fit: cover;">
+            {% else %}
             <img src="{{ url_for('static', filename='images/default-avatar.png') }}" alt="avatar" class="rounded-circle me-2" style="max-width: 52px; object-fit: cover;">
+            {% endif %}
             <!-- author info -->
             <div>
                 <p class="mb-0">
@@ -84,7 +88,7 @@ BookFace - Lose time with your friends
                 </div>
             </div>
             <!-- options menu -->
-            {% if current_user.id != post.user.id %}
+            {% if post.user.id != current_user.id or current_user.role.id == 1 or current_user.role.id == 2 %}
             <div class="dropdown ms-auto me-2 mt-2">
                 <i class="fas fa-ellipsis fa-lg" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul class="dropdown-menu shadow-sm" aria-labelledby="postOptions">
@@ -95,7 +99,7 @@ BookFace - Lose time with your friends
                             Edytuj post
                         </button>
                     </li>
-                    {% if post.user.role.id != 4 %}
+                    {% if post.user.role.id != 4 and post.user.id != current_user.id and (current_user.role.id == 1 or current_user.role.id == 2) %}
                     <!-- block/demote user -->
                     <li>
                         {% if post.user.role.id == 2 %}
@@ -110,7 +114,7 @@ BookFace - Lose time with your friends
                         </button>
                         {% endif %}
                     </li>
-                    {% else %}
+                    {% elif post.user.role.id == 4 and (current_user.role.id == 1 or current_user.role.id == 2) %}
                     <!-- unblock user -->
                     <li>
                         <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#unblockUser-{{ post.id }}">
