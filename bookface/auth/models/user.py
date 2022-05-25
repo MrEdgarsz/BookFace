@@ -8,7 +8,7 @@ from bookface.roles.services.roles_services import RolesService
 
 class User(db.Model, UserMixin):
 
-    def __init__(self, username, password, role_id=None):
+    def __init__(self, username, password, role_id):
         self.username = username
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         self.role_id = role_id
