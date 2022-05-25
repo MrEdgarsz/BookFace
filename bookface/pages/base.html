@@ -18,6 +18,25 @@
    </title>
 </head>
 <body>
+   {% if current_user.is_authenticated %}
+   <nav class="navbar navbar-light bg-primary p-2">
+   <a class="navbar-brand" href="{{ url_for('postboard.postboard_page') }}">
+      <img src="{{ url_for('static',filename='images/default-avatar.png') }}" width="30" height="30"
+         class="d-inline-block align-top" alt="">
+      <p style="color:white; display:inline">BookFace</p>
+   </a>
+   <div class=" ">
+
+      {% if current_user.role_id==1 and url_for(request.endpoint) != url_for('admin.admin_panel') %}
+      <a class="navbar-brand" href="{{  url_for('admin.admin_panel')  }}">
+         <p style="color:white; display:inline; font-size: 12px;">Zarządzaj użytkownikami</p>
+      </a>
+      {% endif %}
+      <a class="navbar-brand" href="{{  url_for('auth.logout')  }}"><p style="color:white; display:inline">Wyloguj</p></a>
+   
+   </div>
+</nav>
+   {% endif %}
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
          <div class="container">
