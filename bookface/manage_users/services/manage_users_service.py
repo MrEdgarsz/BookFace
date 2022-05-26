@@ -24,5 +24,11 @@ class ManageUsersService(metaclass=singleton.Singleton):
         user.role = role
         return self.session.merge(user)
 
+    def promote(self,user_id,role):
+        user = self.session.query(User).filter_by(id=user_id).first()
+        role = self.session.query(Role).filter_by(name=role).first()
+        user.role = role
+        return self.session.merge(user)
+
     def flush(self):
         self.session.commit()

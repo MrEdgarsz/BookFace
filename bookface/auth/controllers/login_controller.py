@@ -20,6 +20,7 @@ def handle_sign_in():
             return redirect(next)
         else:
             flash("Invalid username or password", "error")
+            return redirect(url_for('auth.sign_in'))
     form.data.update({'password': ''})
     return render_template("sign_in_page.html", form=form)
 

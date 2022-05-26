@@ -27,4 +27,10 @@ def unblock(user_id):
     return redirect(url_for('admin.admin_panel'))
 
 
+@admin.route('/promote/<user_id>/<role>')
+def promote(user_id,role):
+    ManageUsersService().promote(user_id,role)
+    ManageUsersService().flush()
+    return redirect(url_for('admin.admin_panel'))
+
 
