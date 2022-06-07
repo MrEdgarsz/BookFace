@@ -41,14 +41,14 @@ BookFace - Lose time with your friends
     }
 </style>
 <div class="container">
-    {% include "includes/global/components/button_scroll_to_top.html" %}
-    {% include "includes/postboard/forms/add_post_form.html" %}
+    {% include "includes/components/button_scroll_to_top.html" %}
+    {% include "includes/forms/add_post_form.html" %}
     {% for post in posts %}
-    {% include "includes/postboard/modals/block_user_modal.html" %}
-    {% include "includes/postboard/modals/unblock_user_modal.html" %}
-    {% include "includes/postboard/modals/demote_user_modal.html" %}
-    {% include "includes/postboard/modals/remove_post_modal.html" %}
-    {% include "includes/postboard/modals/edit_post_modal.html" %}
+    {% include "includes/modals/block_user_modal.html" %}
+    {% include "includes/modals/unblock_user_modal.html" %}
+    {% include "includes/modals/demote_user_modal.html" %}
+    {% include "includes/modals/remove_post_modal.html" %}
+    {% include "includes/modals/edit_post_modal.html" %}
     <!-- post -->
     <div class="post p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm" style="border: 2px solid#eee;">
         <div class="d-flex">
@@ -139,9 +139,9 @@ BookFace - Lose time with your friends
             {% endif %}
         </div>
         <!-- post content -->
-        <p>{{ post.description | safe }}</p>
+        <p>{{ post.description|safe }}</p>
         {% if post.user.role.id != 4 %}
-        <hr>
+        <hr class="border border-1">
         <!-- like/unlike post -->
         <p class="mb-0">
             {# if current_user.has_liked_post(post.id) #}
