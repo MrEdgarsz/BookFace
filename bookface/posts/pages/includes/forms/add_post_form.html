@@ -5,7 +5,7 @@
     <div class="mb-5">
         <form action="" id="addPostForm" method="POST">
             {{ form.hidden_tag() }}
-            {{ form.content(id="postForm", placeholder="Co ci chodzi po głowie?") }}
+            {{ form.content(id="postForm", placeholder="Co ci chodzi po głowie, {}?".format(current_user.username)) }}
             <br>
             <div class="d-grid gap-2 col-6 mx-auto">
                 {{ form.submit(id="postFormSubmit", class="btn btn-primary fw-bold", disabled=true) }}

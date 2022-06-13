@@ -144,25 +144,25 @@ BookFace - Lose time with your friends
         <hr class="border border-1">
         <!-- like/unlike post -->
         <p class="mb-0">
-            {# if current_user.has_liked_post(post.id) #}
-            <a href="{{ url_for('postboard.like_post', post_id=post.id) }}" class="btn btn-outline-primary border-0" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.likes == 1 %} Ten post podoba się <strong>{{ post.likes }}</strong> osobie {% elif post.likes > 1 %} Ten post podoba się <strong>{{ post.likes }}</strong> osobom {% endif %}">
+            {% if current_user.has_liked_post(post) %}
+            <a href="{{ url_for('postboard.unlike_post', post_id=post.id) }}" class="btn btn-outline-primary border-0" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.get_likes() == 1 %} Ten post podoba się <strong>{{ post.get_likes() }}</strong> osobie {% elif post.get_likes() > 1 %} Ten post podoba się <strong>{{ post.get_likes() }}</strong> osobom {% endif %}">
                 <i class="fas fa-thumbs-up"></i>
-                {% if post.likes > 0 %}
-                {{ post.likes }}
+                {% if post.get_likes() > 0 %}
+                {{ post.get_likes() }}
                 {% else %}
                 Lubię to!
                 {% endif %}
             </a>
-            {# else #}
-            <a href="{{ url_for('postboard.unlike_post', post_id=post.id) }}" class="btn btn-outline-primary border-0" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.likes == 1 %} Ten post podoba się <strong>{{ post.likes }}</strong> osobie {% elif post.likes > 1 %} Ten post podoba się <strong>{{ post.likes }}</strong> osobom {% endif %}">
+            {% else %}
+            <a href="{{ url_for('postboard.like_post', post_id=post.id) }}" class="btn btn-outline-primary border-0" data-bs-toggle="tooltip" data-bs-html="true" title="{% if post.get_likes() == 1 %} Ten post podoba się <strong>{{ post.get_likes() }}</strong> osobie {% elif post.get_likes() > 1 %} Ten post podoba się <strong>{{ post.get_likes() }}</strong> osobom {% endif %}">
                 <i class="fas fa-thumbs-up"></i>
-                {% if post.likes > 0 %}
-                {{ post.likes }}
+                {% if post.get_likes() > 0 %}
+                {{ post.get_likes() }}
                 {% else %}
                 Lubię to!
                 {% endif %}
             </a>
-            {# endif #}
+            {% endif %}
         </p>
         {% endif %}
     </div>
@@ -179,9 +179,10 @@ $(function () {
         selector: '#postForm',
         language: 'pl',
         resize: false,
+        toolbar_mode: 'floating',
         plugins: [
             'lists','link','image','charmap','preview','searchreplace','visualblocks',
-            'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
+            'insertdatetime','media','help','wordcount'
         ],
         init_instance_callback: (editor) => {
             console.log(`Editor: ${editor.id} is now initialized.`);
@@ -198,9 +199,10 @@ $(function () {
         selector: '.editPostForm',
         language: 'pl',
         resize: false,
+        toolbar_mode: 'floating',
         plugins: [
             'lists','link','image','charmap','preview','searchreplace','visualblocks',
-            'powerpaste','formatpainter','insertdatetime','media','help','wordcount'
+            'insertdatetime','media','help','wordcount'
         ],
         init_instance_callback: (editor) => {
             console.log(`Editor: ${editor.id} is now initialized.`);
@@ -227,11 +229,10 @@ function checkPostForm() {
     var editorContentInText = $.trim($(editorContent).text());
 
     if (editorContentInText == '') {
-        $('#postFormSubmit').prop('disabled', true);
+        return $('#postFormSubmit').prop('disabled', true);
     }
-    else {
-        $('#postFormSubmit').prop('disabled', false);
-    }
+
+    $('#postFormSubmit').prop('disabled', false);
 }
 
 function checkEditPostModal(postId) {
@@ -256,14 +257,13 @@ function setPostDefaultValue(postId) {
 function checkEditPostForm(postId, postDesc) {
     var editorContent = $('#' + postId).val();
     var editorContentInText = $.trim($(editorContent).text());
-    var submitBtn = postId + '-Submit'
+    var submitBtn = postId + '-Submit';
 		
     if (editorContentInText == '' || editorContentInText == postDesc) {
-        $('#' + submitBtn).prop('disabled', true);
+        return $('#' + submitBtn).prop('disabled', true);
     }
-    else {
-        $('#' + submitBtn).prop('disabled', false);
-    }
+        
+    $('#' + submitBtn).prop('disabled', false);
 }
 </script>
 {% endblock %}
