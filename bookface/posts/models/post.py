@@ -3,13 +3,13 @@ from sqlalchemy.orm import backref
 from datetime import datetime
 import locale
 from calendar import isleap, monthrange
+from bookface.posts.models.postlike import PostLike
 
 class Post(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text, nullable=False)
-    # likers = db.Column(db.PickleType, nullable=True)
-    likes = db.Column(db.Integer, default=0)
+    likes = db.relationship('PostLike', backref='post')
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
@@ -17,6 +17,9 @@ class Post(db.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def get_likes(self):
+        return PostLike.query.filter_by(post_id=self.id).count()
 
     def get_time_difference(self):
         locale.setlocale(locale.LC_ALL, "")
@@ -26,7 +29,7 @@ class Post(db.Model):
         HOUR = 60*MIN
         DAYS_OF_CURRENT_MONTH = monthrange(int(self.created_at.year), int(self.created_at.month))[1]
 
-        if isleap(self.created_at.year):
+        if (isleap(self.created_at.year)):
             DAYS_OF_YEAR = 366
         else:
             DAYS_OF_YEAR = 365
