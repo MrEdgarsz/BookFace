@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, EqualTo
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Nazwa użytkownika', validators=[DataRequired()], )
-    password = PasswordField('Hasło', validators=[DataRequired()],)
-    password_confirm = PasswordField('Potwierdź hasło', validators=[DataRequired(),  EqualTo('password', message='Hasła muszą się zgadzać')],)
-    submit = SubmitField('Zarejestruj')
+    username = StringField("",validators=[DataRequired()],  render_kw={"placeholder": "Nazwa użytkownika"})
+    password = PasswordField( "",validators=[DataRequired()],  render_kw={"placeholder": "Hasło"})
+    password_confirm = PasswordField("",validators=[DataRequired(),  EqualTo('password', message='Hasła muszą się zgadzać')],  render_kw={"placeholder": "Potwierdź hasło"})
+    submit = SubmitField('Zarejestruj się')
