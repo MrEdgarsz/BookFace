@@ -4,10 +4,10 @@ from sqlalchemy.orm import backref
 from bookface import db, bcrypt
 from bookface.roles.models.role import Role
 from bookface.roles.services.roles_services import RolesService
+from bookface.posts.models.postlike import PostLike
 
 
 class User(db.Model, UserMixin):
-
     def __init__(self, username, password, role_id):
         self.username = username
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -30,3 +30,15 @@ class User(db.Model, UserMixin):
 
     def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
+
+    def has_liked_post(self, post):
+        return PostLike.query.filter(PostLike.user_id==self.id, PostLike.post_id==post.id).count() > 0
+
+    def like_post(self, post):
+        if not self.has_liked_post(post):
+            like = PostLike(post_id=post.id, user_id=self.id)
+            db.session.add(like)
+
+    def unlike_post(self, post):
+        if self.has_liked_post(post):
+            PostLike.query.filter_by(user_id=self.id, post_id=post.id).delete()
