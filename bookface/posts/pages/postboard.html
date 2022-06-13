@@ -49,8 +49,8 @@ BookFace - Lose time with your friends
     {% include "includes/modals/demote_user_modal.html" %}
     {% include "includes/modals/remove_post_modal.html" %}
     {% include "includes/modals/edit_post_modal.html" %}
-    <!-- post -->
-    <div class="post p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm" style="border: 2px solid#eee;">
+    <!-- post #{{ post.id }} -->
+    <div class="post p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm" id="post-{{ post.id }}" style="border: 2px solid#eee;">
         <div class="d-flex">
             <!-- avatar -->
             {% if post.user.id == current_user.id %}
@@ -101,7 +101,7 @@ BookFace - Lose time with your friends
                         </button>
                     </li>
                     {% endif %}
-                    {% if post.user.role.id != 4 and post.user.id != current_user.id and (current_user.role.id == 1 or current_user.role.id == 2) %}
+                    {% if post.user.role.id != 4 and post.user.id != current_user.id and current_user.role.id == 1 %}
                     <!-- block/demote user -->
                     <li>
                         {% if post.user.role.id == 2 %}
@@ -116,7 +116,7 @@ BookFace - Lose time with your friends
                         </button>
                         {% endif %}
                     </li>
-                    {% elif post.user.role.id == 4 and post.user.id != current_user.id and (current_user.role.id == 1 or current_user.role.id == 2) %}
+                    {% elif post.user.role.id == 4 and post.user.id != current_user.id and current_user.role.id == 1 %}
                     <!-- unblock user -->
                     <li>
                         <button type="button" class="btn btn-sm dropdown-item" data-bs-toggle="modal" data-bs-target="#unblockUser-{{ post.id }}">
