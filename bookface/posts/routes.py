@@ -1,6 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, logout_user
 import flask
-from flask_login import current_user, login_required
 
 from datetime import datetime
 from time import strftime
@@ -18,6 +18,10 @@ from bookface.auth.models.user import User
 @postboard.route("/postboard", methods=["GET", "POST"])
 @login_required
 def postboard_page():
+    if current_user.role.id == 4:
+        flash("Twoje konto zostało zablokowane. Skontaktuj się w tej sprawie z administracją.", category="danger")
+        logout_user()
+        return redirect(url_for("auth.sign_in"))
     posts = PostService().get_all_by_created_at()
     form = PostForm()
     if form.validate_on_submit():
@@ -35,7 +39,7 @@ def postboard_page():
 @login_required
 def edit_post(post_id):
     post_to_edit = PostService().get_by_id(post_id)
-    if post_to_edit.user.id == current_user.id or current_user.role.id == 1 or current_user.role.id == 2:
+    if (post_to_edit.user.id == current_user.id and current_user.role.id != 4) or current_user.role.id == 1 or current_user.role.id == 2:
         if request.method == "POST":
             post_to_edit.description = request.form['content']  
             post_to_edit.updated_at = datetime.now()   
