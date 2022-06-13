@@ -1,0 +1,23 @@
+<div class="modal fade" id="editPost-{{ post.id }}" class="editPost" tabindex="-1" aria-labelledby="editPostLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-pen-to-square"></i>
+                    Edytuj post
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="setPostDefaultValue({{ post.id }});"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('postboard.edit_post', post_id=post.id) }}" method="POST">
+                    <textarea id="editPostForm-{{ post.id }}" class="editPostForm" name="content">{{ post.description }}</textarea>
+            </div>
+            <div class="modal-footer">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" id="editPostForm-{{ post.id }}-Submit" class="btn btn-primary fw-bold" disabled>Zapisz</button>
+                </div>
+                </form>
+            </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="modal fade" id="removePost-{{ post.id }}" tabindex="-1" aria-labelledby="removePostLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-trash pe-2"></i>
+                    Usuń post
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>  
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć post użytkownika <b>{{ post.user.username }}</b>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light text-danger" data-bs-dismiss="modal">Anuluj</button>
+                <a href="{{ url_for('postboard.delete_post', post_id=post.id) }}" class="btn btn-danger">Usuń</a>
+            </div>
+      </div>
+    </div>
+</div>

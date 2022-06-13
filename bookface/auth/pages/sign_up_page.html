@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+<link href="{{ url_for('static',filename='styles/auth_style.css')}}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <br>
+    <a href="{{  url_for('auth.sign_in')  }}">
+
+        <img src="{{ url_for('static',filename='images/bookface-logo.png')}}" class="logo mx-auto d-block">
+    </a>
+    <div class="mb-5 mt-3">
+        <p class="lead">Trać czas na spotkania z przyjaciółmi!</p>
+    </div>
+
+<div class="register-form p-3 ms-auto me-auto rounded-3 shadow" style="border: 2px solid#eee;">
+                 <form action="#" method="POST">
+                     {{ wtf.form_errors(form, hiddens="only") }}
+                        {% for field in form %}
+                        {% if field.name == "csrf_token" %}
+                          {{ field }}
+                        {% elif field.name == "submit" %}
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-danger" role="alert"> <i class="fa-solid fa-triangle-exclamation"></i>   {{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            {{ wtf.form_field(field, class="btn btn-success btn-block my-2 fw-bold") }}
+                        {% else %}
+                            {{ wtf.form_field(field) }}
+                        {% endif %}
+                    {% endfor %}
+                </form>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+<button id="btnScrollToTop" class="btn-primary position-fixed border-0 text-white rounded-circle shadow" style="right: 20px; bottom: 20px; outline: none; cursor: pointer; display: none; height: 50px; width: 50px; z-index: 1001 !important;
+">
+    <i class="fas fa-arrow-up fa-lg"></i>
+</button>
+<script>
+    window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const btnScrollToTop = document.querySelector("#btnScrollToTop");
+
+        if (scrolled < 500) {
+            return btnScrollToTop.style.display = "none";
+        }
+
+        btnScrollToTop.style.display = "block";
+            btnScrollToTop.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
+                });
+        });
+    });
+</script>
