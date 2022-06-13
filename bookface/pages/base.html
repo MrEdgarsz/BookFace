@@ -74,7 +74,7 @@
    <!-- Base Footer  -->
    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@################################TEMPORARY DISABLE FOOTER AT postboard_page!!!!!!@@@@@@@@@######### -->
    {% if url_for(request.endpoint) != url_for('postboard.postboard_page') %}
-      <footer class="footer " style="bottom:0;position: absolute;width: 100%;">
+      <footer class="bottom-0 d-flex flex-column footer position-fixed d-sm-none d-md-block d-none d-sm-block" style="bottom:0; width: 100%;">
          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-link px-2 text-muted">Dominik Edgar Szpilski, 147915</li>
             <li class="nav-link px-2 text-muted">Radosław Michalak, 147406</li>
