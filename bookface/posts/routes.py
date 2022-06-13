@@ -65,19 +65,14 @@ def unblock_user(user_id):
 
 @postboard.route("/like/<post_id>")
 def like_post(post_id):
-    post_to_update = PostService().get_by_id(post_id)
-    post_to_update.likes += 1
-    # post_to_update.likers.append(current_user)
-    PostService().flush() 
+    post_to_like = PostService().get_by_id(post_id)
+    current_user.like_post(post_to_like)
+    db.session.commit()
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/unlike/<post_id>")
 def unlike_post(post_id):
-    post_to_update = PostService().get_by_id(post_id)
-
-    if post_to_update.likes > 0:
-        post_to_update.likes -= 1
-        # post_to_update.likers.remove(current_user)
-        PostService().flush()
-
+    post_to_unlike = PostService().get_by_id(post_id)
+    current_user.unlike_post(post_to_unlike)
+    db.session.commit()
     return redirect(url_for('postboard.postboard_page')) 
