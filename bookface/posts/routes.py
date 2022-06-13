@@ -14,7 +14,7 @@ from bookface.posts.forms.post_form import PostForm
 from bookface.auth.services.user_service import UserService
 from bookface.auth.models.user import User
 
-@postboard.route("/", methods=["GET", "POST"])
+@postboard.route("/postboard", methods=["GET", "POST"])
 @login_required
 def postboard_page():
     posts = PostService().get_all_by_created_at()
