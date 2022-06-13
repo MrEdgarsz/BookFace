@@ -14,8 +14,7 @@ from bookface.auth.controllers.register_controller import handle_sign_up
 # def home():
 #     return render_template("sign_in_page.html")
 
-@auth.route('/')
-@auth.route("/login", methods=['POST', 'GET'])
+@auth.route('/',methods=['POST', 'GET'])
 def sign_in():
     if current_user.is_authenticated:
         return redirect(url_for('postboard.postboard_page'))
