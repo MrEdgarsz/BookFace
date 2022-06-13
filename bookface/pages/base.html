@@ -37,22 +37,23 @@
    </div>
 </nav>
    {% endif %}
-      {% with messages = get_flashed_messages(with_categories=true) %}
+   {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-         <div class="container">
+         
             {% for category, message in messages %}
                {% if(category == "success") %}
-                 <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                 <div style="position: absolute; z-index: 1; top: 30px;transform: translateX(-50%); left: 50%;"  class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                  </div>
                {% endif %}
             {% endfor %}
          {% endif %}
-         </div>
+       
       {% endwith %}
    <!-- Future Content here -->
    {% block content %}
+   
    {% endblock %}
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
