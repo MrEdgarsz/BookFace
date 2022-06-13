@@ -1,5 +1,4 @@
 from bookface import db
-from sqlalchemy.orm import backref
 
 class PostLike(db.Model):
     __tablename__ = "postslikes"
