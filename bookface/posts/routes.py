@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for
+import flask
 from flask_login import current_user, login_required
 
 from datetime import datetime
@@ -39,6 +40,8 @@ def edit_post(post_id):
             post_to_edit.description = request.form['content']  
             post_to_edit.updated_at = datetime.now()   
         PostService().flush()
+        return redirect(url_for('postboard.postboard_page')) 
+    flask.flash("Nie masz uprawnień do wykonania tej akcji", "danger");
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/delete/<post_id>")
@@ -48,6 +51,8 @@ def delete_post(post_id):
     if post_to_delete.user.id == current_user.id or current_user.role.id == 1 or current_user.role.id == 2: 
         PostService().delete(post_to_delete)
         PostService().flush()
+        return redirect(url_for('postboard.postboard_page')) 
+    flask.flash("Nie masz uprawnień do wykonania tej akcji", "danger");
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/block_user/<user_id>")
@@ -55,7 +60,9 @@ def delete_post(post_id):
 def block_user(user_id):
     if current_user.role.id == 1:
         ManageUsersService().ban_user(user_id)
-        ManageUsersService().flush()      
+        ManageUsersService().flush()
+        return redirect(url_for('postboard.postboard_page')) 
+    flask.flash("Nie masz uprawnień do wykonania tej akcji", "danger");
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/unblock_user/<user_id>")
@@ -64,6 +71,8 @@ def unblock_user(user_id):
     if current_user.role.id == 1:
         ManageUsersService().unban_user(user_id)
         ManageUsersService().flush()
+        return redirect(url_for('postboard.postboard_page')) 
+    flask.flash("Nie masz uprawnień do wykonania tej akcji", "danger");
     return redirect(url_for('postboard.postboard_page')) 
 
 @postboard.route("/like/<post_id>")
