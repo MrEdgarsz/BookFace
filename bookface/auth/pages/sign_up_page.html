@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+<link href="{{ url_for('static',filename='styles/auth_style.css')}}" rel="stylesheet">
+{% endblock %}
 {% block content %}
-<nav class="navbar navbar-light bg-primary p-2">
-    <div class="row">
-        <h1 class="blue-centered-header" style="color: white;">BookFace</h1>
-        <h3 class="blue-centered-header" style="font-style: italic;color: white;">Lose your time with friends!</h3>
-    </div>
-</nav>
+<div class="container text-center">
+    <br>
+    <a href="{{  url_for('auth.sign_in')  }}">
 
-<div class="container py-2">
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <div class="container black">
+        <img src="{{ url_for('static',filename='images/bookface-logo.png')}}" class="logo mx-auto d-block">
+    </a>
+    <div class="mb-5 mt-3">
+        <p class="lead">Trać czas na spotkania z przyjaciółmi!</p>
+    </div>
+
+<div class="register-form p-3 ms-auto me-auto rounded-3 shadow" style="border: 2px solid#eee;">
                  <form action="#" method="POST">
                      {{ wtf.form_errors(form, hiddens="only") }}
                         {% for field in form %}
@@ -25,16 +28,14 @@
                                     {% endfor %}
                                 {% endif %}
                             {% endwith %}
-                            {{ wtf.form_field(field, class="btn btn-primary btn-block my-2") }}
+                            {{ wtf.form_field(field, class="btn btn-success btn-block my-2 fw-bold") }}
                         {% else %}
-                         {{ wtf.form_field(field) }}
+                            {{ wtf.form_field(field) }}
                         {% endif %}
                     {% endfor %}
                 </form>
-            </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}
