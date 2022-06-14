@@ -1,0 +1,12 @@
+#addPostForm
+{
+    width: 50% !important;
+    margin: auto;
+}
+
+@media (max-width: 992px) { 
+    #addPostForm
+    {
+        width: 100% !important;
+    }
+}
