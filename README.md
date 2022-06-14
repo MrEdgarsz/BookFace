@@ -1,6 +1,4 @@
-<div style="text-align:center">
-   <img src="https://raw.githubusercontent.com/MrEdgarsz/BookFace/master/bookface/static/images/bookface-logo.png">
-</div>
+# BookFace
 
 Application imitating basic facebook-like features. Developed for uni Flask class.
 
@@ -13,9 +11,9 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    2. Installation in Visual Code Studio
 3. Links
 
-# Project structure
+## Project structure
 
-## Main functions
+### Main functions
 
 1. Authorization
    1. Sign Up
@@ -29,7 +27,7 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    1. Blocked user page
    2. Main page (seen when user is not signed in)
 
-## Page concepts
+### Page concepts
 
 1. Main template:
    - Nagivation bar:
@@ -72,15 +70,15 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    - some form to contact page administrators?
    - 404 page
 
-# Installation
+## Installation
 
-## Requirements
+### Requirements
 
 - Python
 - Visual Studio Code
 - Python and Pylance extensions for VSC
 
-## Installation in Visual Code Studio
+### Installation in Visual Code Studio
 
 1. Open the project in VSC.
 2. Open terminal `Terminal->New terminal`.
@@ -92,7 +90,7 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
 8. Run the project using console command `python app.py` or by clicking the `play` button in the top right corner of the screen.
 9. Have fun!
 
-# Links
+## Links
 - [Bootstrap v5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 - [Flask](https://flask.palletsprojects.com/en/2.1.x/)
 - [Jinja](https://jinja.palletsprojects.com/en/3.1.x/)
