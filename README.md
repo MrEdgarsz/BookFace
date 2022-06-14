@@ -1,8 +1,21 @@
-# BookFace
+<div style="text-align:center">
+   <img src="https://raw.githubusercontent.com/MrEdgarsz/BookFace/master/bookface/static/images/bookface-logo.png">
+</div>
 
 Application imitating basic facebook-like features. Developed for uni Flask class.
 
-### Main functions
+# Contents
+1. Project structure
+   1. Main functions
+   2. Page concepts
+2. Installation
+   1. Requirements
+   2. Installation in Visual Code Studio
+3. Links
+
+# Project structure
+
+## Main functions
 
 1. Authorization
    1. Sign Up
@@ -16,7 +29,7 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    1. Blocked user page
    2. Main page (seen when user is not signed in)
 
-### Page concepts
+## Page concepts
 
 1. Main template:
    - Nagivation bar:
@@ -59,19 +72,27 @@ Application imitating basic facebook-like features. Developed for uni Flask clas
    - some form to contact page administrators?
    - 404 page
 
+# Installation
 
-### TODO
-| Finished           | Task                                                                                                                                                                                                                                         | Person        |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| :white_check_mark: | Finish authorization                                                                                                                                                                                                                         | Edgar         |
-|                    | Create 404 page                                                                                                                                                                                                                              | Babcia Jadzia |
-| :white_check_mark: | Add "Promote to Moderator/Administrator function"                                                                                                                                                                                            |               |
-|                    | remove prefixes from routes (aka /auth/login should be just /login)                                                                                                                                                                          | Wujek Zdzichu |
-| :white_check_mark: | create a first page (the one that users sees depending if he is signed in or not etc                                                                                                                                                         |               |
-|                    | all function routes should be behind basic and role authorization (like /block_user)                                                                                                                                                         | Dawca         |
-|                    | add a "blocked user page" that we show to a user that is blocked                                                                                                                                                                             | Stopkarz       |
-| :white_check_mark: | fix page titles depending on location and current user (I would opt for just "BookFace - Lose time with your friends" everywhere                                                                                                             |               |
-|                    | clean project architecture to follow the same syntax as auth (for example posts should have pages folder and store all views there)                                                                                                          | Pan Majster   |
-| :white_check_mark: | Make sure that all forms properly handle errors and are informative for users                                                                                                                                                                |               |
-|                    | Change all urls to some user-friendly simple urls and do more behind users back (first page should be posts automatically we don't want to redirect user and function pages aka /block_user should redirect back to page that you came from) |               |
-|                    | Have Fun Coding :tada:                                                                                                                                                                                                                       | Daniel, Radek |
+## Requirements
+
+- Python
+- Visual Studio Code
+- Python and Pylance extensions for VSC
+
+## Installation in Visual Code Studio
+
+1. Open the project in VSC.
+2. Open terminal `Terminal->New terminal`.
+3. Install flask `pip install flask`.
+4. Create a virtual python environment `python -m venv env`.
+5. Activate environment in PowerShell `. ./env/Scripts/activate.ps1`.
+6. Install requirements `pip install -r requirements.txt`.
+7. Select previously created virtual environment as the default runtime environment for the project by using `CTRL+Shift+P`, selecting the `Select inerpreter` option and specifying the path to python - `/env/Scripts/python.exe`.
+8. Run the project using console command `python app.py` or by clicking the `play` button in the top right corner of the screen.
+9. Have fun!
+
+# Links
+- [Bootstrap v5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+- [Flask](https://flask.palletsprojects.com/en/2.1.x/)
+- [Jinja](https://jinja.palletsprojects.com/en/3.1.x/)
