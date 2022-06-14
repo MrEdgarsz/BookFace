@@ -1,23 +1,12 @@
 {% extends "base.html" %}
-{% block title %}
-BookFace - Lose time with your friends
+{% block head %}
+<link href="{{ url_for('static', filename='styles/postboard.css') }}" rel="stylesheet">
+<!-- TinyMCE  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/9ereik6l9j5n7qcn503nt1z19s7udhc57hl17hwtoz2o2eii/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="{{ url_for('static', filename='scripts/postboard.js') }}"></script>
 {% endblock %}
-
 {% block content %}
-<style>
-    #addPostForm
-    {
-        width: 50% !important;
-        margin: auto;
-    }
-
-    @media (max-width: 992px) { 
-        #addPostForm
-        {
-            width: 100% !important;
-        }
-    }
-</style>
 <div class="container">
     {% include "includes/components/button_scroll_to_top.html" %}
     {% include "includes/forms/add_post_form.html" %}
@@ -147,101 +136,4 @@ BookFace - Lose time with your friends
     <br>
     {% endfor %}
 </div>
-<!-- TinyMCE  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/9ereik6l9j5n7qcn503nt1z19s7udhc57hl17hwtoz2o2eii/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-$(function () {
-    // init TinyMCE editors
-    tinymce.init({
-        selector: '#postForm',
-        language: 'pl',
-        resize: false,
-        toolbar_mode: 'floating',
-        plugins: [
-            'lists','link','image','charmap','preview','searchreplace','visualblocks',
-            'insertdatetime','media','help','wordcount'
-        ],
-        init_instance_callback: (editor) => {
-            console.log(`Editor: ${editor.id} is now initialized.`);
-        },
-        setup: function (editor) {
-            editor.on('input', function () {
-                tinymce.triggerSave();
-                checkPostForm();
-            });
-        }
-    });
-
-    tinymce.init({
-        selector: '.editPostForm',
-        language: 'pl',
-        resize: false,
-        toolbar_mode: 'floating',
-        plugins: [
-            'lists','link','image','charmap','preview','searchreplace','visualblocks',
-            'insertdatetime','media','help','wordcount'
-        ],
-        init_instance_callback: (editor) => {
-            console.log(`Editor: ${editor.id} is now initialized.`);
-        },
-        setup: function (editor) {
-            editor.on('input', function () {
-                tinymce.triggerSave();
-                var content = tinymce.activeEditor.getContent();
-                checkEditPostForm(editor.id, content);
-            });
-        }
-    });
-
-    // prevent Bootstrap modal dialog from blocking focusin
-    document.addEventListener('focusin', (e) => {
-        if (e.target.closest('.tox-tinymce-aux, .moxman-window, .tam-assetmanager-root') !== null) {
-            e.stopImmediatePropagation();
-        }
-    });
-});
-
-function checkPostForm() {
-    var editorContent = $('#postForm').val();
-    var editorContentInText = $.trim($(editorContent).text());
-
-    if (editorContentInText == '') {
-        return $('#postFormSubmit').prop('disabled', true);
-    }
-
-    $('#postFormSubmit').prop('disabled', false);
-}
-
-function checkEditPostModal(postId) {
-    checkEditPostForm(postId);
-    setPostDefaultValue(postId);
-}
-
-function setPostDefaultValue(postId) {
-    const editPost = document.getElementById('editPost-' + postId);
-    editPost.addEventListener('show.bs.modal', event => {
-        const button = event.relatedTarget;
-        const postContent = button.getAttribute('data-bs-defaultvalue');
-        tinymce.activeEditor.setContent(postContent);
-    })
-    editPost.addEventListener('hide.bs.modal', event => {
-        const button = event.relatedTarget;
-        const postContent = button.getAttribute('data-bs-defaultvalue');
-        tinymce.activeEditor.setContent(postContent);
-    })
-}
-
-function checkEditPostForm(postId, postDesc) {
-    var editorContent = $('#' + postId).val();
-    var editorContentInText = $.trim($(editorContent).text());
-    var submitBtn = postId + '-Submit';
-		
-    if (editorContentInText == '' || editorContentInText == postDesc) {
-        return $('#' + submitBtn).prop('disabled', true);
-    }
-        
-    $('#' + submitBtn).prop('disabled', false);
-}
-</script>
 {% endblock %}

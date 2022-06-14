@@ -2,22 +2,4 @@
 ">
     <i class="fas fa-arrow-up fa-lg"></i>
 </button>
-<script>
-    window.addEventListener("scroll", () => {
-        const scrolled = window.scrollY;
-        const btnScrollToTop = document.querySelector("#btnScrollToTop");
-
-        if (scrolled < 500) {
-            return btnScrollToTop.style.display = "none";
-        }
-
-        btnScrollToTop.style.display = "block";
-            btnScrollToTop.addEventListener("click", function () {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "smooth"
-                });
-        });
-    });
-</script>
+<script src="{{ url_for('static', filename='scripts/button_scroll_to_top.js') }}"></script>
