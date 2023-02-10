@@ -2,12 +2,9 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {{ url_for('static',filename='admin_panel.css')}}
 {% block content %}
-
-<div class="col-md-12 col-sm-12 col-lg-6 offset-lg-3 table-responsive">
-
-
+<div class="col-md-12 col-sm-12 col-lg-6 offset-lg-3 table-responsive my-5">
     <div class="table-responsive">
-    <table class="table table-striped table-hover">
+    <table class="table bg-white table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -23,7 +20,6 @@
                 <td>{{user.username}}</td>
                 <td>{{user.role.name}}</td>
                 <td>
-                    
                     {% if user.role_id!=1 and user.role_id!=4 %}
                     <a href="{{ url_for('admin.promote',user_id=user.id,role='Administrator') }}"  type="button" class="btn btn-sm btn-outline-primary">Awansuj na administratora</a>
                     {% endif %}
@@ -36,8 +32,7 @@
                         class="btn btn-sm btn-outline-primary">Awansuj na moderatora</a>
                     {% endif %}
                     {% endif %}
-
-                    
+          
                     {% if user.role_id==4 %}
                     <a href="{{ url_for('admin.unblock',user_id=user.id) }}"  type="button" class="btn btn-sm btn-outline-primary">Odblokuj</a>
                     {% elif user.role_id==1 %}
@@ -46,7 +41,6 @@
                     {% else %}
                     <a href="{{ url_for('admin.block',user_id=user.id) }}" type="button" class="btn btn-sm btn-outline-danger">Zablokuj</a>
                     {% endif %}
-                    
                 </td>
             </tr>
             {% endfor %}
@@ -54,6 +48,4 @@
     </table>
 </div>
 </div>
-
-
 {% endblock %}

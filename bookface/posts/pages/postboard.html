@@ -17,7 +17,7 @@
     {% include "includes/modals/remove_post_modal.html" %}
     {% include "includes/modals/edit_post_modal.html" %}
     <!-- post #{{ post.id }} -->
-    <div class="col-lg-6 p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm" id="post-{{ post.id }}" style="border: 2px solid#eee;">
+    <div class="col-lg-6 p-3 mb-0 ms-auto me-auto rounded-3 shadow-sm bg-white" id="post-{{ post.id }}" style="border: 2px solid#eee;">
         <div class="d-flex">
             <!-- avatar -->
             {% if post.user.id == current_user.id %}

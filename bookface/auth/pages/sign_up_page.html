@@ -12,7 +12,7 @@
     <div class="mb-5 mt-3">
         <p class="lead">Trać czas na spotkania z przyjaciółmi!</p>
     </div>
-    <div class="register-form p-3 ms-auto me-auto rounded-3 shadow" style="border: 2px solid#eee;">
+    <div class="register-form p-3 ms-auto me-auto mb-5 rounded-3 shadow bg-white" style="border: 2px solid#eee;">
         <form action="#" method="POST">
             {{ wtf.form_errors(form, hiddens="only") }}
             {% for field in form %}
@@ -26,12 +26,17 @@
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
-                {{ wtf.form_field(field, class="btn btn-success btn-block my-2 fw-bold") }}
+                    <div class = "d-grid gap-2 mt-4">
+                        {{ wtf.form_field(field, class="btn btn-success btn-block my-2 fw-bold") }}
+                    </div>
                 {% else %}
                     {{ wtf.form_field(field) }}
                 {% endif %}
             {% endfor %}
         </form>
+        <hr class="border border-1">
+        <div class="form-text mb-2">Posiadasz już konto?</div>
+        <a href="{{ url_for('auth.sign_in') }}" type="submit" class="btn btn-primary">Zaloguj się</a>
     </div>
 </div>
 {% endblock %}
