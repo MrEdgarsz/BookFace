@@ -1,16 +1,3 @@
-body {
-    background-color: #f1f2f6;
-}
-
-.blue-centered-header {
-    text-align: center;
-    color: #1877f2;
-}
-
-.login-form-box {
-    background-color: white;
-}
-
-.footer {
-    background-color: white;
+.avatar:hover {
+   opacity: 0.9;
 }

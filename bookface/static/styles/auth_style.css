@@ -1,47 +1,47 @@
- .login-form {
-     width: 30% !important;
- }
+.login-form {
+    width: 30% !important;
+}
 
- @media (max-width: 1200px) {
-     .login-form {
-         width: 50% !important;
-     }
+@media (max-width: 1200px) {
+    .login-form {
+        width: 50% !important;
+    }
 
-     .logo {
-         width: 50% !important;
-     }
- }
+    .logo {
+        width: 50% !important;
+    }
+}
 
- @media (max-width: 992px) {
-     .login-form {
-         width: 75% !important;
-     }
+@media (max-width: 992px) {
+    .login-form {
+        width: 75% !important;
+    }
 
-     .logo {
-         width: 75% !important;
-     }
- }
+    .logo {
+        width: 75% !important;
+    }
+}
 
- .register-form {
-     width: 30% !important;
- }
+.register-form {
+    width: 30% !important;
+}
 
- @media (max-width: 1200px) {
-     .register-form {
-         width: 50% !important;
-     }
+@media (max-width: 1200px) {
+    .register-form {
+        width: 50% !important;
+    }
 
-     .logo {
-         width: 50% !important;
-     }
- }
+    .logo {
+        width: 50% !important;
+    }
+}
 
- @media (max-width: 992px) {
-     .register-form {
-         width: 75% !important;
-     }
+@media (max-width: 992px) {
+    .register-form {
+        width: 75% !important;
+    }
 
-     .logo {
-         width: 75% !important;
-     }
- }
+    .logo {
+        width: 75% !important;
+    }
+}
